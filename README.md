@@ -89,3 +89,16 @@ This folder contains a self paced workshop that teaches you everything you need 
 ## License
 
 Please refer to [LICENSE](./LICENSE.md) for all licensing information.
+
+## Contributors
++ Ben Hlaban 
++ Brian Pendergrass
++ Dayo Bamikole 
++ Derek Legenzoff
++ Marck Vaisman
++ Mark Tabladillo
++ Samori Augusto
++ Shelly Parker
++ Sreedhar Mallangi
++ Todd Pliner
+
