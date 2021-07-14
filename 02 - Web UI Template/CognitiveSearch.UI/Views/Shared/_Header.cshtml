@@ -23,6 +23,13 @@
                         <li class="nav-item">
                             <a id="upload-data-page" class="navbar-text navbar-text-color" asp-area="" asp-controller="Admin" asp-action="UploadData">Upload Files</a>
                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="navbar-text navbar-text-color dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Advanced</span> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Advanced" asp-action="Synonyms">Synonyms</a></li>
+                                <li><a asp-area="" asp-controller="Advanced" asp-action="CreateSynonymMap">Create Synonym Map</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             }
