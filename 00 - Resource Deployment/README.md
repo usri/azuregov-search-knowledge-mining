@@ -60,7 +60,7 @@ The PowerShell script will provision the following resources to your Azure subsc
 
 By default, this PowerShell script will provision a Basic Search service for your solution. See [Azure Search Pricing](https://azure.microsoft.com/en-us/pricing/details/search/) for information on sizing limits, scaling limits and pricing and choose your desired tier. 
 
-Depending on your custom skill development needs, additional Azure resources may be required.  See the README in the [03 - Data Science & Custom Skills](../03%20-%20Data%20Science%20and%20Custom%20Skills/README.md) folder for additional information.
+Depending on your custom skill development needs, additional Azure resources may be required.  See  [Custom Web API skill in an Azure Cognitive Search](https://docs.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-web-api)  for additional information.
 
 ## Notes
 
