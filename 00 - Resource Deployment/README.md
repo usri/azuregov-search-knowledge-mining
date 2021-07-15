@@ -19,8 +19,7 @@ There are two options for deploying the resources to Azure for this solution acc
 
     > Please note that this will only deploy the resources. You'll then need to create a search index in the next step.
 
- [![Deploy to Azure](../images/AzureGov.JPG)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsmallangi%2Fazure-search-knowledge-mining%2Fmain%2Fazuredeploy.json)
-
+ [![Deploy to Azure](../images/AzureGov.JPG)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fusri%2Fazuregov-search-knowledge-mining%2Fmain%2Fazuredeploy.json)
 ## Prerequisites
 
 1. Access to an Azure Subscription
