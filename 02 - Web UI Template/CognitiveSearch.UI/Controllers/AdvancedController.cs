@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CognitiveSearch.UI.CognitiveSearchApi;
+using CognitiveSearch.UI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -31,29 +33,89 @@ namespace CognitiveSearch.UI.Controllers
             }
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult Synonyms()
         {
-            InitializeApiClient();
+            var viewModel = new SynonymMapsViewModel
+            {
+                SynonymMapList = GetSynonymMapList()
+            };
 
-            var test = _apiClient.ListSynonymMaps();
-            return View();
+            return View(viewModel);
         }
 
-        public IActionResult CreateSynonymMap(string name, string format, string synonyms, string encryptionKey)
+        public IActionResult NewSynonymMap()
+        {
+            var synonymMap = new SynonymMap();
+
+            return View("CreateSynonymMap", synonymMap);
+        }
+
+        public IActionResult CreateSynonymMap(SynonymMap synonymMap)
         {
             InitializeApiClient();
 
-            name = "usa-synonyms333445";
-            format = "solr";
-            synonyms = "United States of America, U.S.A., America, EEUU, USA";
-            var responseString = _apiClient.CreateSynonymMap(name, format, synonyms, encryptionKey);
+            var result = _apiClient.CreateSynonymMap(synonymMap).Result;
 
-            return RedirectToAction("Synonyms");
+            if (result == "success")
+            {
+                return RedirectToAction("Synonyms");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+
         }
+
+        public IActionResult EditSynonymMap(string name)
+        {
+            InitializeApiClient();
+
+            var synonymMap = _apiClient.GetSynonymMap(name).Result;
+
+            return View(synonymMap);
+        }
+
+        public IActionResult DeleteSynonymMap(string name)
+        {
+            InitializeApiClient();
+
+            var result = _apiClient.DeleteSynonymMap(name).Result;
+
+            if (result == "success")
+            {
+                return RedirectToAction("Synonyms");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
+        
+
+        public IActionResult UpdateSynonymMap(SynonymMap synonymMap)
+        {
+            InitializeApiClient();
+
+            var result = _apiClient.UpdateSynonymMap(synonymMap).Result;
+
+            if(result == "success")
+            {
+                return RedirectToAction("Synonyms");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+            
+        }
+
+        public SynonymMapList GetSynonymMapList()
+        {
+            InitializeApiClient();
+
+            return _apiClient.GetSynonymMaps().Result;           
+        }
+        
     }
 }
