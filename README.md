@@ -55,7 +55,7 @@ The contents of this folder show you how to deploy the required resources to you
 
 Alternatively, you can automatically deploy the required resources using this button:
 
-[![Deploy to Azure](images/AzureGov.JPG)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fusri%2Fazure-search-knowledge-mining%2Fmain%2Fazuredeploy.json)
+[![Deploy to Azure](images/AzureGov.JPG)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fusri%2Fazuregov-search-knowledge-mining%2Fmain%2Fazuredeploy.json)
 
 ### [01 - Search Index Creation](./01%20-%20Search%20Index%20Creation)
 
