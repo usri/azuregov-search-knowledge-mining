@@ -65,6 +65,12 @@ namespace CognitiveSearch.UI.Controllers
 
         }
 
+        public IActionResult SearchApiResponseError(ErrorViewModel model)
+        {
+            return View("Error", model);
+
+        }
+
         public IActionResult Search([FromQuery]string q, [FromQuery]string facets = "", [FromQuery]int page = 1)
         {
             // Split the facets.

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace CognitiveSearch.UI.CognitiveSearchApi
 {
@@ -22,11 +18,18 @@ namespace CognitiveSearch.UI.CognitiveSearchApi
         [Required()]
         public string name { get; set; }
 
-        public string format { get; set; }
+        public string format
+        {
+            //currently solr is the only accepted format
+            get { return "solr"; }
+        }
 
         [Required()]
         public string synonyms { get; set; }
 
         public string encryptionKey { get; set; }
+
+        [IgnoreDataMember]
+        public bool isActive { get; set; }
     }
 }

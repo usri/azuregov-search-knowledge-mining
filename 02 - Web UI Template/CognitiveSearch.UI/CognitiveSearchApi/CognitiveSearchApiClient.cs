@@ -34,9 +34,6 @@ namespace CognitiveSearch.UI
                 };
 
                 _httpClient.DefaultRequestHeaders.Add("api-key", _apiKey);
-                
-                
-
             }
             catch (Exception e)
             {
@@ -53,18 +50,55 @@ namespace CognitiveSearch.UI
 
             HttpResponseMessage response = await _httpClient.GetAsync(requestUri);
 
+            var activeSynonymMap = GetActiveSynonymMap().Result;
+
             if (response != null)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
                 try
                 {
-                    return System.Text.Json.JsonSerializer.Deserialize<SynonymMapList>(jsonString);
+                    var synonymMapList =  System.Text.Json.JsonSerializer.Deserialize<SynonymMapList>(jsonString);
+
+                    if(activeSynonymMap != null)
+                    {
+                        foreach (SynonymMap map in synonymMapList.value)
+                        {
+                            if (map.name == activeSynonymMap[0])
+                            {
+                                map.isActive = true;
+                            }
+                        }
+                    }
+                    
+                    return synonymMapList;
                 }
                 catch(Exception ex)
                 {
                     var err = ex.Message;
                 }
                
+            }
+
+            return null;
+        }
+
+        public async Task<string[]> GetActiveSynonymMap()
+        {
+            var index = await GetIndex(_indexName);
+
+            foreach (Field field in index.fields)
+            {
+                if (field.name == "content")
+                {
+                    if(field.synonymMaps.Length > 0)
+                    {
+                        return field.synonymMaps;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
             }
 
             return null;
@@ -93,87 +127,77 @@ namespace CognitiveSearch.UI
             return null;
         }
 
-        public async Task<string> CreateSynonymMap(SynonymMap synonymMap)
+        public async Task<SearchApiResponse> CreateSynonymMap(SynonymMap synonymMap)
         {
             var requestUri = $"/synonymmaps/?api-version={_apiVersion}";
 
             string body = JsonConvert.SerializeObject(synonymMap);
 
             var content = new StringContent(body, Encoding.UTF8, "application/json");
-            try
+
+            var response = await _httpClient.PostAsync(requestUri, content);
+
+            var searchApiResponse = new SearchApiResponse
             {
-                HttpResponseMessage response = await _httpClient.PostAsync(requestUri, content);
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                StatusCode = response.StatusCode,
+                Content = response.Content.ReadAsStringAsync().Result
+            };
 
-                if (response.IsSuccessStatusCode)
-                {
-                    UpdateIndexSynonymMap(synonymMap.name, false);
-
-                    return "success";
-                }
-                else
-                {
-                    return "failed";
-                }
-
-            }
-            catch (Exception ex)
+            if (response.IsSuccessStatusCode)
             {
-                return ex.Message;
+                UpdateIndexSynonymMap(synonymMap.name, false);
             }
+
+            return searchApiResponse;
         }
 
-        public async Task<string> UpdateSynonymMap(SynonymMap synonymMap)
+        public async Task<SearchApiResponse> UpdateSynonymMap(SynonymMap synonymMap)
         {
             var requestUri = $"/synonymmaps/{synonymMap.name}/?api-version={_apiVersion}";
 
             string body = JsonConvert.SerializeObject(synonymMap);
 
             var content = new StringContent(body, Encoding.UTF8, "application/json");
-            try
+
+            var response = await _httpClient.PutAsync(requestUri, content);
+
+            var searchApiResponse = new SearchApiResponse
             {
-                HttpResponseMessage response = await _httpClient.PutAsync(requestUri, content);
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                StatusCode = response.StatusCode,
+                Content = response.Content.ReadAsStringAsync().Result
+            };
 
-                if (response.IsSuccessStatusCode)
-                {
-                    UpdateIndexSynonymMap(synonymMap.name, false);
-
-                    return "success";
-                }
-                else
-                {
-                    return "failed";
-                }
-
-            }
-            catch(Exception ex)
+            if (response.IsSuccessStatusCode)
             {
-                return ex.Message;
+                UpdateIndexSynonymMap(synonymMap.name, false);
             }
+
+            return searchApiResponse;
         }
 
-        public async Task<string> DeleteSynonymMap(string name)
+        public async Task<SearchApiResponse> DeleteSynonymMap(string name)
         {
             var requestUri = $"/synonymmaps/{name}/?api-version={_apiVersion}";
 
-            try
-            {
-                HttpResponseMessage response = await _httpClient.DeleteAsync(requestUri);
+            HttpResponseMessage response = await _httpClient.DeleteAsync(requestUri);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    UpdateIndexSynonymMap(name, true);
-
-                    return "success";
-                }
-                else
-                {
-                    return "failed";
-                }
-            }
-            catch (Exception ex)
+            var searchApiResponse = new SearchApiResponse
             {
-                return ex.Message;
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                StatusCode = response.StatusCode,
+                Content = response.Content.ReadAsStringAsync().Result
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                UpdateIndexSynonymMap(name, true);
             }
+
+            return searchApiResponse;
+
+
         }
 
         public async Task<SearchIndex> GetIndex(string indexName)
@@ -199,7 +223,7 @@ namespace CognitiveSearch.UI
             return null;
         }
 
-        public async Task<SearchIndex> UpdateIndex(SearchIndex index)
+        public async Task<SearchApiResponse> UpdateIndex(SearchIndex index)
         {
             var requestUri = $"/indexes/{index.name}?api-version={_apiVersion}";
 
@@ -209,27 +233,18 @@ namespace CognitiveSearch.UI
 
             HttpResponseMessage response = await _httpClient.PutAsync(requestUri, content);
 
-            if (response != null)
+            var searchApiResponse = new SearchApiResponse
             {
-                try
-                {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-                    return System.Text.Json.JsonSerializer.Deserialize<SearchIndex>(jsonString);
-                }
-                catch (Exception ex)
-                {
-                    var err = ex.Message;
-                }
+                IsSuccessStatusCode = response.IsSuccessStatusCode,
+                StatusCode = response.StatusCode,
+                Content = response.Content.ReadAsStringAsync().Result
+            };
 
-            }
-
-            return null;
+            return searchApiResponse;
         }
 
-        private bool UpdateIndexSynonymMap(string synonymMapName, bool isDeleted)
+        public Task<SearchApiResponse> UpdateIndexSynonymMap(string synonymMapName, bool isDeleted)
         {
-            bool success = false;
-
             var index = GetIndex(_indexName).Result;
 
             foreach(Field field in index.fields)
@@ -244,13 +259,12 @@ namespace CognitiveSearch.UI
                     {
                         field.synonymMaps = new string[] { };
                     }
-                    
+
+                    break;                    
                 }
             }
 
-            var updatedIndex = UpdateIndex(index).Result;
-
-            return success;
+            return UpdateIndex(index);
         }
 
     }

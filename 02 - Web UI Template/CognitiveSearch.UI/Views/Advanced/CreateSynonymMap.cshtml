@@ -13,9 +13,9 @@
 {
     
         <div class="form-group">
-            <label for="exampleInputEmail1">Synonym Map Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Synonym Map Name">
-            <small id="emailHelp" class="form-text text-muted">Name must be lower case and no special characters except dashes.</small>
+            <label for="txtName">Synonym Map Name</label>
+            @Html.TextBoxFor(m => m.name, new {@id = "txtName", @class = "form-control", placeholder = "Enter Synonym Map Name"})
+            <small id="txtNameHelp" class="form-text text-muted">Name must be lower case and no special characters except dashes.</small>
         </div>
 
         <div class="form-group">

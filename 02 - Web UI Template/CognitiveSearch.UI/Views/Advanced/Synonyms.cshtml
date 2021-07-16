@@ -23,7 +23,8 @@
               <th scope="col">Synonym Map </th>
               <th scope="col">Format</th>
               <th scope="col">Synonyms</th>
-              <th scope="col">Encryption Key</th>
+              <th scope="col">Is Active</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -33,9 +34,20 @@
                     <td>@map.name</td>
                     <td>@map.format</td>
                     <td>@map.synonyms</td>
-                    <td>@map.encryptionKey</td>
-                    <td>@Html.ActionLink("Edit", "EditSynonymMap", "Advanced", new {name = @map.name})
-                    <td>@Html.ActionLink("Delete", "DeleteSynonymMap", "Advanced", new {name = @map.name}, new {onclick = "return confirm('Are you sure you want to delete this Synonym Map?');"})
+                    @if(map.isActive){
+                        <td>Yes</td>
+                    }
+                    else{
+                        <td>&nbsp;</td>
+                    }
+                    <td>
+                        <div style="width:80%; float:left;">
+                            @Html.ActionLink("Make Active", "MakeActiveSynonymMap", "Advanced", new {name = @map.name}) |
+                            @Html.ActionLink("Edit", "EditSynonymMap", "Advanced", new {name = @map.name})  |
+                            @Html.ActionLink("Delete", "DeleteSynonymMap", "Advanced", new {name = @map.name}, new {onclick = "return confirm('Are you sure you want to delete this Synonym Map?');"})
+                        </div>
+                        
+                    </td>
                 </tr>
             }
             </tbody>

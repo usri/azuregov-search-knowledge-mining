@@ -54,17 +54,43 @@ namespace CognitiveSearch.UI.Controllers
         {
             InitializeApiClient();
 
-            var result = _apiClient.CreateSynonymMap(synonymMap).Result;
+            var searchApiResponse = _apiClient.CreateSynonymMap(synonymMap).Result;
 
-            if (result == "success")
+            if (searchApiResponse.IsSuccessStatusCode)
             {
                 return RedirectToAction("Synonyms");
             }
             else
             {
-                return RedirectToAction("Error");
+                ErrorViewModel error = new ErrorViewModel
+                {
+                    ErrorMessage = searchApiResponse.Content
+                };
+
+                return RedirectToAction("SearchApiResponseError", "Home",  error);
             }
 
+        }
+
+        public IActionResult MakeActiveSynonymMap(string name)
+        {
+            InitializeApiClient();
+
+            var searchApiResponse = _apiClient.UpdateIndexSynonymMap(name, false).Result;
+
+            if (searchApiResponse.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Synonyms");
+            }
+            else
+            {
+                ErrorViewModel error = new ErrorViewModel
+                {
+                    ErrorMessage = searchApiResponse.Content
+                };
+
+                return RedirectToAction("SearchApiResponseError", "Home", error);
+            }
         }
 
         public IActionResult EditSynonymMap(string name)
@@ -80,15 +106,21 @@ namespace CognitiveSearch.UI.Controllers
         {
             InitializeApiClient();
 
-            var result = _apiClient.DeleteSynonymMap(name).Result;
+            var searchApiResponse = _apiClient.DeleteSynonymMap(name).Result;
 
-            if (result == "success")
+
+            if (searchApiResponse.IsSuccessStatusCode)
             {
                 return RedirectToAction("Synonyms");
             }
             else
             {
-                return RedirectToAction("Error");
+                ErrorViewModel error = new ErrorViewModel
+                {
+                    ErrorMessage = searchApiResponse.Content
+                };
+
+                return RedirectToAction("SearchApiResponseError", "Home", error);
             }
         }
         
@@ -97,17 +129,22 @@ namespace CognitiveSearch.UI.Controllers
         {
             InitializeApiClient();
 
-            var result = _apiClient.UpdateSynonymMap(synonymMap).Result;
+            var searchApiResponse = _apiClient.UpdateSynonymMap(synonymMap).Result;
 
-            if(result == "success")
+            if (searchApiResponse.IsSuccessStatusCode)
             {
                 return RedirectToAction("Synonyms");
             }
             else
             {
-                return RedirectToAction("Error");
+                ErrorViewModel error = new ErrorViewModel
+                {
+                    ErrorMessage = searchApiResponse.Content
+                };
+
+                return RedirectToAction("SearchApiResponseError", "Home", error);
             }
-            
+
         }
 
         public SynonymMapList GetSynonymMapList()
