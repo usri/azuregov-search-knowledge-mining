@@ -1,27 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CognitiveSearch.UI.CognitiveSearchApi
+﻿namespace CognitiveSearch.UI.CognitiveSearchApi
 {
     public class SearchIndex
     {
         public string name { get; set; }
         public string defaultScoringProfile { get; set; }
         public Field[] fields { get; set; }
-
-        //todo: optional index properties
-        //public {} similarity { get; set; }
-        //public {} suggesters { get; set; }
-        //public {} scoringProfiles { get; set; }
-        //public {} analyzers { get; set; }
-        //public {} charFilters { get; set; }
-        //public {} tokenizers { get; set; }
-        //public {} tokenFilters { get; set; }
-       
-        //public {} corsOptions { get; set; }
-        //public {} encryptionKey { get; set; }
     }
 
     public class Field

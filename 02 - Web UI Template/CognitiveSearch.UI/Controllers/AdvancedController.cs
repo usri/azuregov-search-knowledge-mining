@@ -3,9 +3,6 @@ using CognitiveSearch.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -123,7 +120,6 @@ namespace CognitiveSearch.UI.Controllers
                 return RedirectToAction("SearchApiResponseError", "Home", error);
             }
         }
-        
 
         public IActionResult UpdateSynonymMap(SynonymMap synonymMap)
         {
@@ -153,6 +149,5 @@ namespace CognitiveSearch.UI.Controllers
 
             return _apiClient.GetSynonymMaps().Result;           
         }
-        
     }
 }
