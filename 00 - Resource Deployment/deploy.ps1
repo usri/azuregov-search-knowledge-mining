@@ -287,8 +287,8 @@ function Deploy
 
 
         # Setting App Insights Key in Web app
-        Write-Host "Connecting App Insights with Web App";
-        $appSetting = @{'APPINSIGHTS_INSTRUMENTATIONKEY' = $appInsights.Properties.InstrumentationKey }
+        Write-Host "Configuring the Web App";
+        $appSetting = @{'APPINSIGHTS_INSTRUMENTATIONKEY' = $appInsights.Properties.InstrumentationKey; 'WEBSITE_RUN_FROM_PACKAGE' = '1' }
         $updateSettings = Set-AzWebApp `
             -Name $webappname `
             -ResourceGroupName $resourceGroupName `
@@ -312,6 +312,29 @@ function Deploy
         Write-Host "------------------------------------------------------------";
 	}
     PrintAppsettings;
+
+    function DeployWebUICode 
+    {
+        Set-Location "..\02 - Web UI Template\CognitiveSearch.UI"
+        dotnet publish
+        Set-Location ".\bin\Debug\netcoreapp3.1\publish\"
+
+        $json = Get-Content .\appsettings.json | ConvertFrom-Json
+        $json.SearchServiceName="$searchServiceName"
+        $json.SearchApiKey="$global:searchServiceKey"
+        $json.SearchIndexName="$indexName"
+        $json.SearchIndexerName="$indexerName"
+        $json.StorageAccountName="$storageAccountName"
+        $json.StorageAccountKey="$global:storageAccountKey"
+        $StorageContainerAddress = ("https://"+$storageAccountName+".blob.core.usgovcloudapi.net/"+$storageContainerName)
+        $json.StorageContainerAddress="$StorageContainerAddress"
+        $json | ConvertTo-Json | Set-Content .\appsettings.json
+
+        Compress-Archive * ..\..\CognativeSearchUI.zip -Force
+        Set-location "..\.."
+        Publish-AzWebApp -ResourceGroupName $resourceGroupName -Name $webappname -ArchivePath $pwd\CognativeSearchUI.zip
+    }
+    DeployWebUICode;
 }
 
 Deploy;
