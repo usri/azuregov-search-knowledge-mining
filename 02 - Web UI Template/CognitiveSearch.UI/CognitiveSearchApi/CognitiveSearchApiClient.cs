@@ -23,7 +23,7 @@ namespace CognitiveSearch.UI
             {
                 _configuration = configuration;
                 _apiKey = configuration.GetSection("SearchApiKey")?.Value;
-                _apiBaseURL = configuration.GetSection("SearchApiBaseURL").Value;
+                _apiBaseURL = $"https://{configuration.GetSection("SearchServiceName").Value}.search.azure.us";
                 _apiVersion = configuration.GetSection("SearchApiVersion").Value;
                 _indexName = configuration.GetSection("SearchIndexName").Value;
 
