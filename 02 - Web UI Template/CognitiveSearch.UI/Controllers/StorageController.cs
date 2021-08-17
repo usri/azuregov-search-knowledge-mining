@@ -22,7 +22,7 @@ namespace CognitiveSearch.UI.Controllers
         public StorageController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _docSearch = new DocumentSearchClient(configuration);
+            _docSearch = DocumentSearchClient.Instance(configuration);
         }
 
         [HttpPost("upload")]

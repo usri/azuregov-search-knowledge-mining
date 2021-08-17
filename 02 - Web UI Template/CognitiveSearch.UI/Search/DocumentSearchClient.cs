@@ -53,8 +53,21 @@ namespace CognitiveSearch.UI
         // this should match the default value used in appsettings.json.  
         private static string defaultContainerUriValue = "https://{storage-account-name}.blob.core.usgovcloudapi.net/{container-name}";
 
+        //DocumentSearchClient Singleton
+        private static DocumentSearchClient instance = null;
 
-        public DocumentSearchClient(IConfiguration configuration)
+        public static DocumentSearchClient Instance(IConfiguration configuration)
+        {
+            if (instance == null)
+            {
+                instance = new DocumentSearchClient(configuration);
+            }
+
+            return instance;
+        }
+
+
+        protected DocumentSearchClient(IConfiguration configuration)
         {
             try
             {

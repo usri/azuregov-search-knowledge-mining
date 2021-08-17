@@ -27,7 +27,7 @@ namespace CognitiveSearch.UI.Controllers
         {
             try
             {
-                _docSearch = new DocumentSearchClient(_configuration);
+                _docSearch = DocumentSearchClient.Instance(_configuration);
             }
             catch (Exception e)
             {
