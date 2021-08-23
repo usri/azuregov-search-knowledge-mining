@@ -1,0 +1,31 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+@model CognitiveSearch.UI.CognitiveSearchApi.SynonymMap
+
+@using CognitiveSearch.UI.CognitiveSearchApi
+
+@{
+    ViewData["Title"] = "Synonyms";
+    ViewData["Path"] = "Advanced / Synonyms";
+}
+
+@using (Html.BeginForm("UpdateSynonymMap", "Advanced"))
+{
+    @Html.HiddenFor(m => m.name)
+    @Html.HiddenFor(m => m.format)
+    @Html.HiddenFor(m => m.encryptionKey)
+    <div class="form-group">
+        <label class="">Synonym Map: @Model.name</label>
+    </div>
+
+    <div class="form-group">
+        <p>Synonyms must be separated by commas and on the same line. Add a new line to create a new list of synonyms.</p>
+        <p><em>Note: This synonym map will be added to the "content" field of your index.</em></p>
+        @Html.TextAreaFor(m => m.synonyms, 10, 20, new{@class="form-control", style="background-color:#EBEDEF;"})<br />
+    </div>
+
+    <div class="form-group">
+        <input type="button" value="Cancel" class="btn btn-secondary" onclick="location.href='@Url.Action("Synonyms", "Advanced")'" />
+        <button class="btn btn-success" type="submit">Save</button>
+    </div>
+}

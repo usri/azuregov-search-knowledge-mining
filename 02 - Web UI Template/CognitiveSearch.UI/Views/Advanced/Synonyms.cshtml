@@ -1,0 +1,56 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+@model CognitiveSearch.UI.Models.SynonymMapsViewModel
+
+@using CognitiveSearch.UI.CognitiveSearchApi
+
+@{
+    ViewData["Title"] = "Synonyms";
+    ViewData["Path"] = "Advanced / Synonyms";
+}
+
+<script type="text/javascript" src="~/js/synonyms.js"></script>
+
+
+<div class="row justify-content-md-center">
+    <div class="col-10">
+        <div class="row" style="float:left; padding-top:20px; padding-bottom:40px;">
+           @Html.ActionLink("New Synonym Map", "NewSynonymMap", "Advanced")
+        </div>
+        <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+              <th scope="col">Synonym Map </th>
+              <th scope="col">Format</th>
+              <th scope="col">Synonyms</th>
+              <th scope="col">Is Active</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach(SynonymMap map in Model.SynonymMapList.value)
+            {
+                <tr>
+                    <td>@map.name</td>
+                    <td>@map.format</td>
+                    <td>@map.synonyms</td>
+                    @if(map.isActive){
+                        <td>Yes</td>
+                    }
+                    else{
+                        <td>&nbsp;</td>
+                    }
+                    <td>
+                        <div style="width:80%; float:left;">
+                            @Html.ActionLink("Make Active", "MakeActiveSynonymMap", "Advanced", new {name = @map.name}) |
+                            @Html.ActionLink("Edit", "EditSynonymMap", "Advanced", new {name = @map.name})  |
+                            @Html.ActionLink("Delete", "DeleteSynonymMap", "Advanced", new {name = @map.name}, new {onclick = "return confirm('Are you sure you want to delete this Synonym Map?');"})
+                        </div>
+                        
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
