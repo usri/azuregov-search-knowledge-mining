@@ -110,3 +110,10 @@ Much of the UI is rendered dynamically by javascript. Some important files to kn
 2. **wwroot/js/details.js** - contains the code for rending the detail view once a result is selected
 
 3. **Search/DocumentSearchClient.cs** - contains the code for talking with Azure Cognitive Search's APIs. Setting breakpoints in this file is a great way to debug.
+
+
+# Synonym Maps
+The UI allows users to create and modify Synonym Maps.  Learn about Synonyms in Azure Cognitive Search here: https://docs.microsoft.com/en-us/azure/search/search-synonyms
+
+To create a Synonym Map go to the "Advanced" menu option and select "Synonyms". Then select "New Synonym Map" on the upper left corner of the page.
+(../images/synonyms-1.png)
