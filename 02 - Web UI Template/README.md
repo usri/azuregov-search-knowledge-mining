@@ -126,6 +126,7 @@ The UI allows users to create and modify Synonym Maps.  Learn about Synonyms in 
 3. Next, provide a name for your Synonym Map.  (lower case, no special characters. see documentation).  
 4. Create a comma-separated list of terms that you want to be synonyms.  (see image below)
 5. Enter another list of comma-separated term on a new line. (see image below)
+6. Click Save
 
 ![synonyms](../images/synonyms-4.png)
 
