@@ -405,6 +405,11 @@ pre {
     width: 50%;
 }
 
+.results-div:hover {
+    color: #0076BB;
+    cursor: pointer;
+}
+
 .results-body {
     padding-left: 0;
     padding-right: 0;
