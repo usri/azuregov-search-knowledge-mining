@@ -115,5 +115,21 @@ Much of the UI is rendered dynamically by javascript. Some important files to kn
 ## 5. Synonym Maps
 The UI allows users to create and modify Synonym Maps.  Learn about Synonyms in Azure Cognitive Search here: https://docs.microsoft.com/en-us/azure/search/search-synonyms
 
-To create a Synonym Map go to the "Advanced" menu option and select "Synonyms". Then select "New Synonym Map" on the upper left corner of the page.
+1. To create a Synonym Map go to the "Advanced" menu option and select "Synonyms". 
+
 ![synonyms](../images/synonyms-1.png)
+
+2. Then select "New Synonym Map" on the upper left corner of the page.
+
+![synonyms](../images/synonyms-2.png)
+
+3. Next, provide a name for your Synonym Map.  (lower case, no special characters. see documentation).  
+4. Create a comma-separated list of terms that you want to be synonyms.  (see image below)
+5. Enter another list of comma-separated term on a new line. (see image below)
+
+![synonyms](../images/synonyms-4.png)
+
+6. The UI supports only one active Synonym Map on the Content field of the Azure Cognitive Search index.  Click the "Make Active" link to set the active Synonym Map. (see image below)
+7. An existing Synonym Map can be edited or deleted.  (see image below)
+
+![synonyms](../images/synonyms-6.png)
