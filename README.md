@@ -83,8 +83,10 @@ Please refer to [LICENSE](./LICENSE.md) for all licensing information.
 + Derek Legenzoff
 + Marck Vaisman
 + Mark Tabladillo
++ Richard Posada
 + Samori Augusto
 + Shelly Parker
 + Sreedhar Mallangi
++ Tim Omta
 + Todd Pliner
 
