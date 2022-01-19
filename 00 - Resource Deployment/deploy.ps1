@@ -347,7 +347,7 @@ function Deploy
         $json.SearchApiVersion="2020-06-30"
         $json.InstrumentationKey="$InstrumentationKey"
         $json.AzureMapsSubscriptionKey="$AzureMapsSubscriptionKey"
-        $json.GraphFacet="$GraphFacet"
+        $json.GraphFacet="organizations,persons,locations"
         $json.Customizable="true"
         $json.OrganizationName="Microsoft"
         $json.OrganizationLogo="~/images/logo.png"
