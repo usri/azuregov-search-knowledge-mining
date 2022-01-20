@@ -288,7 +288,7 @@ function Deploy
 
         # Setting App Insights Key in Web app
         Write-Host "Configuring the Web App";
-        $appSetting = @{'APPINSIGHTS_INSTRUMENTATIONKEY' = $appInsights.Properties.InstrumentationKey; 'WEBSITE_RUN_FROM_PACKAGE' = '1' }
+        $appSetting = @{'APPINSIGHTS_INSTRUMENTATIONKEY' = $appInsights.Properties.InstrumentationKey }
         $updateSettings = Set-AzWebApp `
             -Name $webappname `
             -ResourceGroupName $resourceGroupName `
@@ -309,6 +309,18 @@ function Deploy
         Write-Host "StorageAccountKey: '$global:storageAccountKey'";
         $StorageContainerAddress = ("https://"+$storageAccountName+".blob.core.usgovcloudapi.net/"+$storageContainerName)
         Write-Host "StorageContainerAddress: '$StorageContainerAddress'";
+        Write-Host "StorageContainerAddress2: '$StorageContainerAddress2'";
+        Write-Host "StorageContainerAddress3: '$StorageContainerAddress3'";
+        Write-Host "KeyField: '$KeyField'";
+        Write-Host "IsPathBase64Encoded: '$IsPathBase64Encoded'";
+        Write-Host "SearchApiVersion: '$SearchApiVersion'";
+        Write-Host "InstrumentationKey: '$InstrumentationKey'";
+        Write-Host "AzureMapsSubscriptionKey: '$AzureMapsSubscriptionKey'";
+        Write-Host "GraphFacet: '$GraphFacet'";
+        Write-Host "Customizable: '$Customizable'";
+        Write-Host "OrganizationName: '$OrganizationName'";
+        Write-Host "OrganizationLogo: '$OrganizationLogo'";
+        Write-Host "OrganizationWebSiteUrl: '$OrganizationWebSiteUrl'";
         Write-Host "------------------------------------------------------------";
 	}
     PrintAppsettings;
@@ -328,6 +340,17 @@ function Deploy
         $json.StorageAccountKey="$global:storageAccountKey"
         $StorageContainerAddress = ("https://"+$storageAccountName+".blob.core.usgovcloudapi.net/"+$storageContainerName)
         $json.StorageContainerAddress="$StorageContainerAddress"
+        $json.StorageContainerAddress2="https://{storage-account-name}.blob.core.usgovcloudapi.net/{container-name}"
+        $json.StorageContainerAddress3="https://{storage-account-name}.blob.core.usgovcloudapi.net/{container-name}"
+        $json.KeyField="metadata_storage_path"
+        $json.SearchApiVersion="2020-06-30"
+        $json.InstrumentationKey="$InstrumentationKey"
+        $json.AzureMapsSubscriptionKey="$AzureMapsSubscriptionKey"
+        $json.GraphFacet="$GraphFacet"
+        $json.Customizable="true"
+        $json.OrganizationName="Microsoft"
+        $json.OrganizationLogo="~/images/logo.png"
+        $json.OrganizationWebSiteUrl="https://www.microsoft.com"
         $json | ConvertTo-Json | Set-Content .\appsettings.json
 
         Compress-Archive * ..\..\CognativeSearchUI.zip -Force
