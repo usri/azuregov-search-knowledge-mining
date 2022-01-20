@@ -163,10 +163,12 @@ function Deploy
             -Context $storageContext `
             -Permission Off
 
-        Write-Host "Uploading sample_documents directory";
-        Push-Location "../sample_documents"
-        ls -File -Recurse | Set-AzStorageBlobContent -Container $storageContainerName -Context $storageContext -Force
-        Pop-Location
+        Write-Host "Uploading sample documents directory";		
+		$filepath= "../sample_documents"
+		foreach($file in Get-ChildItem $filepath)
+		{
+			Set-AzStorageBlobContent -File $file.FullName -Container $storageContainerName -Properties @{"ContentType" = [System.Web.MimeMapping]::GetMimeMapping($file.FullName);} -Context $storageContext -Force 
+		}
 	}
 
     CreateStorageAccountAndContainer;
