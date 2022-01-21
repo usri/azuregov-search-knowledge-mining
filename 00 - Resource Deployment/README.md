@@ -4,14 +4,13 @@ There are two options for deploying the resources to Azure for this solution acc
 
 1. **Using a PowerShell Script**: `deploy.ps1`
 
-    This script is the fastest way to get your solution up and running and will perform the following actions:
+    This script is the fastest way to get your solution up and running and deploy the solution end to end:
 
     1. Provision the required Azure resources
     2. Upload sample data to your storage account
     3. Create a search index
-    4. Print out the values and keys needed for the web app's *appsettings.json*
+    4. Deploy Web App
 
-    If you choose to run this script, **you can skip the Search Index Creation** in the next folder.
 
 1. **Using an ARM Template**: `azuredeploy.json`
 
@@ -25,9 +24,11 @@ There are two options for deploying the resources to Azure for this solution acc
 1. Access to an Azure Subscription
 1. If you're running the PowerShell script, you'll also need to install the [Az PowerShell Module](https://docs.microsoft.com/powershell/azure/install-az-ps)
 
+3. Powershell script deploys web application which requires specific nuget packages. Make sure that you have the required nuget packages before you run the script. 
+
 ## Running the PowerShell Script
 
-> If you're new to PowerShell, you can follow the instructions on [How to run PowerShell script file on Windows 10](https://www.windowscentral.com/how-create-and-run-your-first-powershell-script-file-windows-10) to help you get started.
+> If you're new to PowerShell, you can follow the instructions on [How to run PowerShell script file on Windows 10](https://www.windowscentral.com/how-create-and-run-your-first-powershell-script-file-windows-10) to help you get started. Make sure that uniqueName and resourceGroupName does not have any special characters. 
 
 To run the [PowerShell script](./deploy.ps1):
 
