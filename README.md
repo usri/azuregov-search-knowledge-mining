@@ -50,7 +50,7 @@ Clone or download this repository and then navigate through each of these folder
 ![the cognitive indexing pipelines used for processing unstructured data in Azure Search](images/architecture.jpg)
 
 > Note: If you have sensitive content, please note the following:
-* The web application that comes with this SA is not configured with authentication provider. So anyone can access the web application if they have the web app URL. If you have sensitive content, you need to restrict the access to the web application.
+* The web application that comes with this Solution Accelerator is not configured with authentication provider. So anyone can access the web application if they have the web application URL. If you have sensitive content, you need to restrict the access to the web application.
 * Web application access the data in the Blob storage using SAS(Shared access signature) token. When user executes Query, web application generates SAS token for the Search results.
 
 If you have sensitive data please work with your security team to restrict the access. 
