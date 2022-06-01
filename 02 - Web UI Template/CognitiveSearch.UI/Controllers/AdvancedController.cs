@@ -51,6 +51,22 @@ namespace CognitiveSearch.UI.Controllers
         {
             InitializeApiClient();
 
+            //Get encryptionKey
+            var keyVaultKeyName = _configuration.GetSection("keyVaultKeyName").Value;
+            var keyVaultKeyVersion = _configuration.GetSection("keyVaultKeyVersion").Value;
+            var keyVaultUri = _configuration.GetSection("keyVaultUri").Value;
+
+            if(!string.IsNullOrEmpty(keyVaultKeyName) && !string.IsNullOrEmpty(keyVaultKeyVersion) && !string.IsNullOrEmpty(keyVaultUri))
+            {
+                synonymMap.encryptionKey = new EncryptionKey
+                {
+                    keyVaultKeyName = keyVaultKeyName != "" ? keyVaultKeyName : null,
+                    keyVaultKeyVersion = keyVaultKeyVersion != "" ? keyVaultKeyVersion : null,
+                    keyVaultUri = keyVaultUri != "" ? keyVaultUri : null,
+                };
+            }
+            
+
             var searchApiResponse = _apiClient.CreateSynonymMap(synonymMap).Result;
 
             if (searchApiResponse.IsSuccessStatusCode)
