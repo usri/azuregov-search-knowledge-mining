@@ -28,6 +28,7 @@ This file contains a mix of required and optional fields described below.
   "StorageContainerAddress": "https://{storage-account-name}.blob.core.windows.net/{container-name}",
   "KeyField": "metadata_storage_path",
   "IsPathBase64Encoded": true,
+  "SearchApiVersion": "",
 ```
 
 1. **SearchServiceName** - The name of your Azure Cognitive Search service
@@ -39,6 +40,7 @@ This file contains a mix of required and optional fields described below.
 7. **StorageContainerAddress** - The URL to the storage container where your documents are stored. This should be in the following format: *https://*storageaccountname*.blob.core.windows.net/*containername**
 8. **KeyField** - They key field for your search index. This should be set to the field specified as a key document Id in the index. By default this is *metadata_storage_path*.
 9. **IsPathBase64Encoded** - By default, metadata_storage_path is the key, and it gets base64 encoded so this is set to true by default. If your key is not encoded, set this to false.
+10. **SearchApiVersion" - Put a version of a Search API for Azure Cognitive Search.  A recent stable version is 2020-06-30, but you may see [this full list of supported options.](https://docs.microsoft.com/en-us/rest/api/searchservice/search-service-api-versions)
 
 ### Optional Fields
 
@@ -88,7 +90,7 @@ If you would like to further customize the UI, you can update the following fiel
 
 **ResultFields** - Defines which fields will be returned in the results view. Only fields that are used for the UI should be included here to reduce latency caused by larger documents. By default all fields are included.
 
-## 3. Pulish the app
+## 3. Publish the app
 
 You need to configure Visual Studio to connect and publish the application to Azure Government. Follow the steps mentioned on [Azure Government Documenttaion](https://docs.microsoft.com/en-us/azure/azure-government/documentation-government-connect-vs).
 
@@ -123,7 +125,7 @@ The UI allows users to create and modify Synonym Maps.  Learn about Synonyms in 
 
 ![synonyms](../images/synonyms-2.png)
 
-3. Next, provide a name for your Synonym Map.  (lower case, no special characters. see documentation).  
+3. Next, provide a name for your Synonym Map.  (lower case, no special characters. [see documentation](https://docs.microsoft.com/en-us/azure/search/search-synonyms)).  
 4. Create a comma-separated list of terms that you want to be synonyms.  (see image below)
 5. Enter another list of comma-separated term on a new line. (see image below)
 6. Click Save
