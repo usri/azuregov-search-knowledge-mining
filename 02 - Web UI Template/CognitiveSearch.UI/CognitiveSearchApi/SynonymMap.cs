@@ -12,6 +12,13 @@ namespace CognitiveSearch.UI.CognitiveSearchApi
         public SynonymMap[] value { get; set; }
     }
 
+    public class EncryptionKey
+    {
+        public string keyVaultKeyName;
+        public string keyVaultKeyVersion;
+        public string keyVaultUri;
+    }
+
 
     public class SynonymMap
     {
@@ -27,7 +34,7 @@ namespace CognitiveSearch.UI.CognitiveSearchApi
         [Required()]
         public string synonyms { get; set; }
 
-        public string encryptionKey { get; set; }
+        public EncryptionKey encryptionKey { get; set; }
 
         [IgnoreDataMember]
         public bool isActive { get; set; }
