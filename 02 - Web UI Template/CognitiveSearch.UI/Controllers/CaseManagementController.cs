@@ -6,7 +6,9 @@ namespace CognitiveSearch.UI.Controllers
     {
         public IActionResult Index()
         {
+            //Show Cases
             return View();
+
         }
     }
 }
