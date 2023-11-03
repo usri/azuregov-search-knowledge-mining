@@ -47,11 +47,12 @@ namespace CognitiveSearch.UI
         private bool _isPathBase64Encoded { get; set; }
 
         // data source information. Currently supporting 3 data sources indexed by different indexers
+        // how to increase? ac, 2023-11-01
         private static string[] s_containerAddresses = null;
         private static string[] s_tokens = null;
 
         // this should match the default value used in appsettings.json.  
-        private static string defaultContainerUriValue = "https://{storage-account-name}.blob.core.usgovcloudapi.net/{container-name}";
+        private static string defaultContainerUriValue = "https://searchmtnstr.blob.core.usgovcloudapi.net/random";
 
         //DocumentSearchClient Singleton
         private static DocumentSearchClient instance = null;
@@ -385,11 +386,13 @@ namespace CognitiveSearch.UI
             return result;
         }
 
+        // can we pass the name of the indexer as a parameter? ac, 2023-11-01
         /// <summary>
         /// Initiates a run of the search indexer.
         /// </summary>
         public async Task RunIndexer()
         {
+
             SearchIndexerClient _searchIndexerClient = new SearchIndexerClient(new Uri($"https://{searchServiceName}.search.azure.us/"), new AzureKeyCredential(apiKey));
             var indexStatus = await _searchIndexerClient.GetIndexerStatusAsync(IndexerName);
             if (indexStatus.Value.LastResult.Status != IndexerExecutionStatus.InProgress)
@@ -398,6 +401,7 @@ namespace CognitiveSearch.UI
             }
         }
 
+        // will need to add reference to additional storage accounts here - ac, 2023-11-01
         private string GetToken(string decodedPath, out int storageIndex)
         {
             // Initialize s_tokens and containers if not already initialized
@@ -407,11 +411,13 @@ namespace CognitiveSearch.UI
             string tokenToUse;
             if (decodedPath.ToLower().Contains(s_containerAddresses[1])) { tokenToUse = s_tokens[1]; storageIndex = 1; }
             else if (decodedPath.ToLower().Contains(s_containerAddresses[2])) { tokenToUse = s_tokens[2]; storageIndex = 2; }
+            else if (decodedPath.ToLower().Contains(s_containerAddresses[3])) { tokenToUse = s_tokens[3]; storageIndex = 3; }
             else { tokenToUse = s_tokens[0]; storageIndex = 0; }
 
             return tokenToUse;
         }
 
+        // another location to update when adding more than 3 containers - ac, 2023-11-01
         /// <summary>
         /// This will return up to 3 s_tokens for the storage accounts
         /// </summary>
@@ -419,16 +425,22 @@ namespace CognitiveSearch.UI
         private void GetContainerSasUris()
         {
             // We need to refresh the s_tokens every time or they will become invalid.
-            s_tokens = new string[3];
-            s_containerAddresses = new string[3];
+            s_tokens = new string[4];
+            s_containerAddresses = new string[4];
 
             string accountName = _configuration.GetSection("StorageAccountName")?.Value;
             string accountKey = _configuration.GetSection("StorageAccountKey")?.Value;
             StorageSharedKeyCredential storageSharedKeyCredential = new StorageSharedKeyCredential(accountName, accountKey);
+
+            // Adding more than 3 containers for testing purposes - AC, 2023-11-01
+            // containers are in the same storage account
             s_containerAddresses[0] = _configuration.GetSection("StorageContainerAddress")?.Value.ToLower();
             s_containerAddresses[1] = _configuration.GetSection("StorageContainerAddress2")?.Value.ToLower();
             s_containerAddresses[2] = _configuration.GetSection("StorageContainerAddress3")?.Value.ToLower();
+            s_containerAddresses[3] = _configuration.GetSection("StorageContainerAddress4")?.Value.ToLower();
+
             int s_containerAddressesLength = s_containerAddresses.Length;
+
             if (String.Equals(s_containerAddresses[1], defaultContainerUriValue))
             {
                 s_containerAddressesLength--;
@@ -437,6 +449,11 @@ namespace CognitiveSearch.UI
             {
                 s_containerAddressesLength--;
             }
+            if (String.Equals(s_containerAddresses[3], defaultContainerUriValue))
+            {
+                s_containerAddressesLength--;
+            }
+
             for (int i = 0; i < s_containerAddressesLength; i++)
             {
                 BlobContainerClient container = new BlobContainerClient(new Uri(s_containerAddresses[i]), new StorageSharedKeyCredential(accountName, accountKey));

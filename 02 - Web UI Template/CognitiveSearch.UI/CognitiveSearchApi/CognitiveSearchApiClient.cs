@@ -87,7 +87,7 @@ namespace CognitiveSearch.UI
 
             foreach (Field field in index.fields)
             {
-                if (field.name == "content")
+                if (field.name == "merged_content")
                 {
                     if(field.synonymMaps.Length > 0)
                     {
@@ -248,7 +248,7 @@ namespace CognitiveSearch.UI
 
             foreach(Field field in index.fields)
             {
-                if(field.name == "content")
+                if(field.name == "merged_content")
                 {
                     if (!isDeleted)
                     {
